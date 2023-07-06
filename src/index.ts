@@ -6,6 +6,9 @@ import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 import gamesRoutes from './routes/gamesRoutes';
 import courseRoutes from './routes/courseRoutes';
+import teacherRoutes from './routes/teacherRoutes';
+import tcontactRoutes from './routes/tcontactRoutes';
+import tcourseRoutes from './routes/tcourseRoutes';
 
 class Server {
     public app: Application
@@ -28,6 +31,9 @@ class Server {
         this.app.use("/",indexRoutes);
         this.app.use("/api/games", gamesRoutes);
         this.app.use("/api/course", courseRoutes);
+        this.app.use("/api/teacher", teacherRoutes);
+        this.app.use("/api/teacher/contact", tcontactRoutes);
+        this.app.use("/api/teacher/course", tcourseRoutes);
     }
 
     start(): void{
