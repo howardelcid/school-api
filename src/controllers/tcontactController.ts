@@ -25,7 +25,7 @@ class tcontactController{
         try{
             console.log(req.params);
             const { id } = req.params;
-            const teacherById = await Pool.query('SELECT * FROM teacher_contacts WHERE teacher_id = ?', [id]);
+            const teacherById = await Pool.query('SELECT * FROM contactomaestro WHERE codigoCatedratico in (select codigoCatedratico from maestro where idMaestro = ? ) and estado = 1', [id]);
             if(teacherById.length > 0){
                 return res.json(teacherById); 
             }
@@ -43,9 +43,8 @@ class tcontactController{
             const { tid } = req.body;
             const { name } = req.body;
             const { phone } = req.body;
-            const { state } = req.body;            
             
-            await Pool.query('INSERT INTO teacher_contacts (teacher_id,tcontact_name,tcontact_phone,tcontact_state) VALUES (?,?,?,?)', [tid, name, phone, state]);
+            await Pool.query('INSERT INTO contactomaestro (codigoCatedratico,nombreCompleto,telefono,estado) VALUES (?,?,?,1)', [tid, name, phone]);
             res.json({message: `Contacto guardado.`});
         }
         catch(err){
@@ -58,9 +57,9 @@ class tcontactController{
     public async delete(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const teacherById = await Pool.query('SELECT * FROM teacher_contacts WHERE tcontact_id = ?', [id]);
+            const teacherById = await Pool.query('SELECT * FROM contactomaestro WHERE idContactoM = ?', [id]);
             if(teacherById.length > 0){
-                await Pool.query('DELETE FROM teacher_contacts WHERE tcontact_id = ?', [id]);
+                await Pool.query('UPDATE contactomaestro SET estado = 0 WHERE idContactoM = ?', [id]);
                 return res.json({message: `Contacto de Profesor con id: ${id} eliminado.`});
             } else {
                 return res.status(404).json({message: 'Contacto no encontrado.'});
@@ -78,12 +77,10 @@ class tcontactController{
             const { id } = req.params;
             const { name } = req.body;
             const { phone } = req.body;
-            const { uid } = req.body;            
-            const { state } = req.body;            
 
             //await Pool.query('INSERT INTO teacher_contacts (teacher_id,tcontact_name,tcontact_phone,tcontact_state) VALUES (?,?,?,?)', [tid, name, phone, state]);
 
-            await Pool.query('UPDATE teacher_contacts SET tcontact_name=?, tcontact_phone=?, tcontact_state=? WHERE tcontact_id = ?',[name, phone, state, id]);
+            await Pool.query('UPDATE contactomaestro SET nombreCompleto=?, telefono=? WHERE idContactoM = ?',[name, phone, id]);
             res.json({message: `Contacto con id: ${id} actualizado.`});
         }
         catch(err){
