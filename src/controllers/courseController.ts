@@ -23,7 +23,7 @@ class courseController{
     public async listByID(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE id_curso = ?', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
             if(courseById.length > 0){
                 return res.json(courseById); 
             }
@@ -38,7 +38,11 @@ class courseController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            await Pool.query('INSERT INTO curso set?', [req.body]);
+
+            const { id } = req.body;            
+            const { name } = req.body;            
+
+            await Pool.query('INSERT INTO curso values (idCurso, nombreCurso, estado) values (?,?,1) ', [req.body]);
             res.json({message: `Curso guardado.`});
         }
         catch(err){
@@ -51,9 +55,9 @@ class courseController{
     public async delete(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE id_curso = ?', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
             if(courseById.length > 0){
-                await Pool.query('DELETE FROM curso WHERE id_curso = ?', [id]);
+                await Pool.query('UPDATE curso SET estado = 0 WHERE idCurso = ?', [id]);
                 return res.json({message: `Curso con id: ${id} eliminado.`});
             } else {
                 return res.status(404).json({message: 'Curso no encontrado, no se puede eliminar.'});
@@ -69,7 +73,9 @@ class courseController{
     public async update(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            await Pool.query('UPDATE curso SET ? WHERE id_curso = ?', [req.body, id]);
+            const { name } = req.body;            
+
+            await Pool.query('UPDATE curso SET nombreCurso = ? WHERE idCurso = ?', [name, id]);
             res.json({message: `Curso con id: ${id} actualizado.`});
         }
         catch(err){
