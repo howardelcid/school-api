@@ -7,7 +7,7 @@ class courseController{
     // esto para el metodo GET
     public async list(req: Request, res: Response): Promise<any>{
         try{
-            const courses = await Pool.query('SELECT * FROM curso');
+            const courses = await Pool.query('SELECT * FROM curso WHERE estado = 1');
             if(courses.length > 0){
                 return res.json(courses); 
             } 
@@ -23,7 +23,7 @@ class courseController{
     public async listByID(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ? AND estado = 1', [id]);
             if(courseById.length > 0){
                 return res.json(courseById); 
             }
@@ -38,11 +38,7 @@ class courseController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-
-            const { id } = req.body;            
-            const { name } = req.body;            
-
-            await Pool.query('INSERT INTO curso values (idCurso, nombreCurso, estado) values (?,?,1) ', [req.body]);
+            await Pool.query('INSERT INTO curso values (nombreCurso, estado) values (?,1) ', [req.body]);
             res.json({message: `Curso guardado.`});
         }
         catch(err){
@@ -55,7 +51,7 @@ class courseController{
     public async delete(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ? AND estado = 1', [id]);
             if(courseById.length > 0){
                 await Pool.query('UPDATE curso SET estado = 0 WHERE idCurso = ?', [id]);
                 return res.json({message: `Curso con id: ${id} eliminado.`});

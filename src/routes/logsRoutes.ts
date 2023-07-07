@@ -12,7 +12,7 @@ class logsRoutes{
     config(): void{ 
         //Tabla Bitacora
         this.router.get('/bitacora',LogsController.listBit);
-        this.router.get('/bitacora/:idRegistro',LogsController.listByIDBit);
+        this.router.get('/bitacora/:idEvento',LogsController.listByIDBit);
         this.router.post('/bitacora',LogsController.createBit);
         //this.router.delete('/bitacora/:idRegistro',LogsController.deleteBit); POR SER BITACORA NO DEBERIA ELIMINARSE EL REGISTRO
         //this.router.put('/bitacora/:idRegistro',LogsController.updateBit); POR SER BITACORA NO DEBERIA ACTAULIZASE EL REGISTRO
