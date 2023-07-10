@@ -40,11 +40,11 @@ class scontactController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            const { tid } = req.body;
-            const { name } = req.body;
-            const { phone } = req.body;
+            const { carnetAlumno } = req.body;
+            const { nombreCompleto } = req.body;
+            const { telefono } = req.body;
             
-            await Pool.query('INSERT INTO contactoalumno (carnetAlumno,nombreCompleto,telefono,estado) VALUES (?,?,?,1)', [tid, name, phone]);
+            await Pool.query('INSERT INTO contactoalumno (carnetAlumno,nombreCompleto,telefono,estado) VALUES (?,?,?,1)', [carnetAlumno, nombreCompleto, telefono]);
             res.json({message: `Contacto guardado.`});
         }
         catch(err){
@@ -75,12 +75,12 @@ class scontactController{
     public async update(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { name } = req.body;
-            const { phone } = req.body;
+            const { nombreCompleto } = req.body;
+            const { telefono } = req.body;
 
             //await Pool.query('INSERT INTO teacher_contacts (teacher_id,tcontact_name,tcontact_phone,tcontact_state) VALUES (?,?,?,?)', [tid, name, phone, state]);
 
-            await Pool.query('UPDATE contactoalumno SET nombreCompleto=?, telefono=? WHERE idContacto = ?',[name, phone, id]);
+            await Pool.query('UPDATE contactoalumno SET nombreCompleto=?, telefono=? WHERE idContacto = ?',[nombreCompleto, telefono, id]);
             res.json({message: `Contacto con id: ${id} actualizado.`});
         }
         catch(err){
