@@ -39,19 +39,19 @@ class teacherController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            const { name } = req.body;
-            const { code } = req.body;
-            const { phone } = req.body;
+            const { nombreCompleto } = req.body;
+            const { codigoCatedratico } = req.body;
+            const { telefono } = req.body;
             const { dpi } = req.body;            
             const { email } = req.body; 
-            const { level } = req.body; 
-            const { aptitude1 } = req.body; 
-            const { aptitude2 } = req.body; 
-            const { aptitude3 } = req.body; 
-            const { aptitude4 } = req.body; 
-            const { aptitude5 } = req.body;  
+            const { nivelIngles } = req.body; 
+            const { aptitudCurso1 } = req.body; 
+            const { aptitudCurso2 } = req.body; 
+            const { aptitudCurso3 } = req.body; 
+            const { aptitudCurso4 } = req.body; 
+            const { aptitudCurso5 } = req.body;  
             
-            await Pool.query('INSERT INTO maestro (codigoCatedratico,nombreCompleto,dpi,telefono,email,nivelIngles,aptitudCurso1,aptitudCurso2,aptitudCurso3,aptitudCurso4,aptitudCurso5) VALUES (?,?,?,?,?,?,?,?,?,?,?,1)', [code, name, dpi, phone, email, level, aptitude1, aptitude2, aptitude3, aptitude4, aptitude5]);
+            await Pool.query('INSERT INTO maestro (codigoCatedratico,nombreCompleto,dpi,telefono,email,nivelIngles,aptitudCurso1,aptitudCurso2,aptitudCurso3,aptitudCurso4,aptitudCurso5,estado) VALUES (?,?,?,?,?,?,?,?,?,?,?,1)', [codigoCatedratico, nombreCompleto, dpi, telefono, email, nivelIngles, aptitudCurso1, aptitudCurso2, aptitudCurso3, aptitudCurso4, aptitudCurso5]);
             res.json({message: `Profesor guardado.`});
         }
         catch(err){
@@ -82,19 +82,19 @@ class teacherController{
     public async update(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { code } = req.body;
-            const { name } = req.body;            
-            const { phone } = req.body;
+            const { codigoCatedratico } = req.body;
+            const { nombreCompleto } = req.body;            
+            const { telefono } = req.body;
             const { dpi } = req.body;            
             const { email } = req.body; 
-            const { level } = req.body; 
-            const { aptitude1 } = req.body; 
-            const { aptitude2 } = req.body; 
-            const { aptitude3 } = req.body; 
-            const { aptitude4 } = req.body; 
-            const { aptitude5 } = req.body;  
+            const { nivelIngles } = req.body; 
+            const { aptitudCurso1 } = req.body; 
+            const { aptitudCurso2 } = req.body; 
+            const { aptitudCurso3 } = req.body; 
+            const { aptitudCurso4 } = req.body; 
+            const { aptitudCurso5 } = req.body;  
             
-            await Pool.query('UPDATE maestro SET codigoCatedratico=?, nombreCompleto=?, dpi=?, telefono=?, email=?,nivelIngles=?,aptitudCurso1=?,aptitudCurso2=?,aptitudCurso3=?,aptitudCurso4=?,aptitudCurso5=? WHERE idMaestro = ?',[code, name, dpi, phone, email, level, aptitude1, aptitude2, aptitude3, aptitude4, aptitude5, id]);
+            await Pool.query('UPDATE maestro SET codigoCatedratico=?, nombreCompleto=?, dpi=?, telefono=?, email=?,nivelIngles=?,aptitudCurso1=?,aptitudCurso2=?,aptitudCurso3=?,aptitudCurso4=?,aptitudCurso5=? WHERE idMaestro = ?',[codigoCatedratico, nombreCompleto, dpi, telefono, email, nivelIngles, aptitudCurso1, aptitudCurso2, aptitudCurso3, aptitudCurso4, aptitudCurso5, id]);
             res.json({message: `Profesor con id: ${id} actualizado.`});
         }
         catch(err){
@@ -107,9 +107,9 @@ class teacherController{
     public async state(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { state } = req.body;      
+            const { estado } = req.body;      
             
-            await Pool.query('UPDATE maestro SET estado=? WHERE idMaestro = ?',[state, id]);
+            await Pool.query('UPDATE maestro SET estado=? WHERE idMaestro = ?',[estado, id]);
             res.json({message: `Profesor con id: ${id} actualizado.`});
         }
         catch(err){
