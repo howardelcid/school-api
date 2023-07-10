@@ -4,22 +4,6 @@ import Pool from '../database';
 
 class scontactController{
 
-    // esto para el metodo GET
-    /*public async list(req: Request, res: Response): Promise<any>{
-        try{
-            const { tid } = req.body;
-            const tcontacts = await Pool.query('SELECT * FROM teacher_contacts WHERE teacher_id = ?', [tid]);
-            if(tcontacts.length > 0){
-                return res.json(tcontacts); 
-            } 
-            return res.status(404).json({message: 'No existen contactos del profesor solicitado.'});
-        }
-        catch(err){
-            console.log(err);
-            res.status(500).json({message: `Error: ${err}`});
-        }
-    } */
-
     // esto para el metodo GET con un ID
     public async listByID(req: Request, res: Response): Promise<any>{
         try{
