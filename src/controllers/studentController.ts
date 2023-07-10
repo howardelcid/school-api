@@ -39,15 +39,15 @@ class studentController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            const { name } = req.body;
-            const { code } = req.body;
-            const { phone } = req.body;
+            const { nombreCompleto } = req.body;
+            const { carnet } = req.body;
+            const { telefono } = req.body;
             const { dpi } = req.body;            
             const { email } = req.body; 
-            const { addr } = req.body; 
-            const { datebirth } = req.body; 
+            const { direccion } = req.body; 
+            const { fechaNacimiento } = req.body; 
             
-            await Pool.query('INSERT INTO alumno (carnet,nombreCompleto,dpi,direccion,telefono,email,fechaNacimiento,estado) VALUES (?,?,?,?,?,?,?,1)', [code, name, dpi, addr, phone, email, datebirth]);
+            await Pool.query('INSERT INTO alumno (carnet,nombreCompleto,dpi,direccion,telefono,email,fechaNacimiento,estado) VALUES (?,?,?,?,?,?,?,1)', [carnet, nombreCompleto, dpi, direccion, telefono, email, fechaNacimiento]);
             res.json({message: `Alumno guardado.`});
         }
         catch(err){
@@ -78,15 +78,15 @@ class studentController{
     public async update(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { code } = req.body;
-            const { name } = req.body;            
-            const { phone } = req.body;
+            const { nombreCompleto } = req.body;
+            const { carnet } = req.body;
+            const { telefono } = req.body;
             const { dpi } = req.body;            
             const { email } = req.body; 
-            const { addr } = req.body; 
-            const { datebirth } = req.body; 
+            const { direccion } = req.body; 
+            const { fechaNacimiento } = req.body; 
             
-            await Pool.query('UPDATE alumno SET carnet=?, nombreCompleto=?, dpi=?, fechaNacimiento=?, telefono=?, email=?, direccion=? WHERE idAlumno = ?',[code, name, dpi, addr, phone, email, addr, id]);
+            await Pool.query('UPDATE alumno SET carnet=?, nombreCompleto=?, dpi=?, fechaNacimiento=?, telefono=?, email=?, direccion=? WHERE idAlumno = ?',[carnet, nombreCompleto, dpi, fechaNacimiento, telefono, email, direccion, id]);
             res.json({message: `Alumno con id: ${id} actualizado.`});
         }
         catch(err){
@@ -99,9 +99,9 @@ class studentController{
     public async state(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { state } = req.body;      
+            const { estado } = req.body;      
             
-            await Pool.query('UPDATE alumno SET estado=? WHERE idAlumno = ?',[state, id]);
+            await Pool.query('UPDATE alumno SET estado=? WHERE idAlumno = ?',[estado, id]);
             res.json({message: `Alumno con id: ${id} actualizado.`});
         }
         catch(err){
