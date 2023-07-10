@@ -7,7 +7,7 @@ class courseController{
     // esto para el metodo GET
     public async list(req: Request, res: Response): Promise<any>{
         try{
-            const courses = await Pool.query('SELECT * FROM curso WHERE estado = 1');
+            const courses = await Pool.query('SELECT * FROM curso');
             if(courses.length > 0){
                 return res.json(courses); 
             } 
@@ -23,7 +23,7 @@ class courseController{
     public async listByID(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ? AND estado = 1', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
             if(courseById.length > 0){
                 return res.json(courseById); 
             }
@@ -38,7 +38,11 @@ class courseController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            await Pool.query('INSERT INTO curso values (nombreCurso, estado) values (?,1) ', [req.body]);
+
+            const { idCurso } = req.body;            
+            const { nombreCurso } = req.body;            
+
+            await Pool.query('INSERT INTO curso values (idCurso, nombreCurso, estado) values (?,?,1) ', [idCurso,nombreCurso]);
             res.json({message: `Curso guardado.`});
         }
         catch(err){
@@ -51,7 +55,7 @@ class courseController{
     public async delete(req: Request, res: Response): Promise<any>{
         try{
             const { id } = req.params;
-            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ? AND estado = 1', [id]);
+            const courseById = await Pool.query('SELECT * FROM curso WHERE idCurso = ?', [id]);
             if(courseById.length > 0){
                 await Pool.query('UPDATE curso SET estado = 0 WHERE idCurso = ?', [id]);
                 return res.json({message: `Curso con id: ${id} eliminado.`});
@@ -69,7 +73,7 @@ class courseController{
     public async update(req: Request, res: Response): Promise<void>{
         try{
             const { id } = req.params;
-            const { name } = req.body;            
+            const { nombreCurso } = req.body;            
 
             await Pool.query('UPDATE curso SET nombreCurso = ? WHERE idCurso = ?', [name, id]);
             res.json({message: `Curso con id: ${id} actualizado.`});
