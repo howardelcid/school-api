@@ -36,7 +36,7 @@ class studentController{
         }
     }
 
-    // esto para el metodo POST
+    // esto para el metodo  POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
             const { name } = req.body;
