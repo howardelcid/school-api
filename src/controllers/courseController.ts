@@ -38,7 +38,7 @@ class courseController{
     // esto para el metodo POST
     public async create(req: Request, res: Response): Promise<void>{
         try{
-            await Pool.query('INSERT INTO curso values (nombreCurso, estado) values (?,1) ', [req.body]);
+            await Pool.query('INSERT INTO curso values (nombreCurso, estado)  values (?,1) ', [req.body]);
             res.json({message: `Curso guardado.`});
         }
         catch(err){
