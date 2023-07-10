@@ -2,8 +2,8 @@ export default {
 
     database: {
         host: 'localhost',
-        user: '***',
-        password: '***',
-        database: 'school_db'
+        user: 'root',
+        password: '',
+        database: 'academydatabase'
     }
 }

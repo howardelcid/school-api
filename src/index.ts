@@ -10,6 +10,8 @@ import tcontactRoutes from './routes/tcontactRoutes';
 import studentRoutes from './routes/studentRoutes';
 import scontactRoutes from './routes/scontactRoutes';
 import logsRoutes from './routes/logsRoutes';
+import userRoutes from './routes/userRoutes';
+import scoreRoutes from './routes/scoreRoutes';
 
 class Server {
     public app: Application
@@ -36,6 +38,8 @@ class Server {
         this.app.use("/api/student", studentRoutes);
         this.app.use("/api/student/contact", scontactRoutes);
         this.app.use("/api/logs", logsRoutes);
+        this.app.use("/api/user", userRoutes);
+        this.app.use("/api/score", scoreRoutes);
     }
 
     start(): void{
